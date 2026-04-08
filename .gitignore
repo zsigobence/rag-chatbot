@@ -1,0 +1,6 @@
+venv/
+.env
+
+# Jupyter Notebook ideiglenes fájlok
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*

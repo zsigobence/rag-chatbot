@@ -4,10 +4,10 @@
 Ez a repository egy Agentic Retrieval-Augmented Generation (RAG) alapú chatbot működőképes prototípusát tartalmazza. A megoldás demonstrálja az autonóm döntéshozatalt és a részfeladatok végrehajtását a LangGraph keretrendszer segítségével.
 
 ## Architektúra és Döntéshozatal (Design Decisions)
-A feladatkiírásnak megfelelően a projekt nem használ fizetős API-kat. A tervezés során az alábbi opciókat vizsgáltam meg:
-1. **Lokális nyílt forráskódú modellek (pl. Ollama/Llama3):** A prototípus hardverfüggetlen skálázhatósága és a gyorsabb fejlesztési iterációk miatt elvetve.
-2. **HuggingFace Free Inference API:** A gyakori "rate limit" korlátozások és az instabilitás miatt elvetve.
-3. **Google Gemini API (Free Tier):** Ez a megoldás lett kiválasztva. Maradéktalanul teljesíti a "nem fizetős" kritériumot (Google AI Studio Free Tier), ugyanakkor biztosítja azt a megbízhatóságot, sebességet és intelligenciát, ami egy Agentic LangGraph rendszer stabil működéséhez és a döntési útvonalak (routing) hibátlan futásához szükséges. A LangChain implementációnak köszönhetően a modell a későbbiekben egyetlen kódsor módosításával cserélhető bármilyen más nyílt vagy zárt modellre.
+A feladatkiírásnak megfelelően a projekt mentes a fizetős API-któl. A tervezés során iteratív megközelítést alkalmaztam:
+1. **Lokális modellek (pl. Ollama):** A hardverfüggőség és a lassú válaszidők miatt elvetve.
+2. **Google Gemini API (Free Tier):** A kezdeti prototípus ezt használta, azonban a szigorú rate-limitek (429 Resource Exhausted) instabillá tették a működést.
+3. **Hugging Face Inference API (Kiválasztott megoldás):** A stabilitás érdekében a végső architektúra a Hugging Face felhőjében futó nyílt forráskódú **Qwen 2.5 7B** modellt használja. A task-routing hibák kiküszöbölésére a LangChain `ChatHuggingFace` wrapperét alkalmaztam. Ez a megoldás tökéletesen demonstrálja a LangGraph architektúra cserélhetőségét (modularity) és hibatűrését.
 
 ## Telepítés és Futtatás
 
